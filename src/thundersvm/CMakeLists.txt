@@ -17,7 +17,7 @@ if(USE_CUDA)
   file(GLOB SRC_KERNEL kernel/*.cu)
   list(APPEND SRC ${SRC_KERNEL})
   cuda_add_library(${PROJECT_LIB_NAME} ${SRC})
-  if(OpenMP_FOUND)
+  if(OpenMP_FOUND AND USE_OMP)
     target_link_libraries(
       ${PROJECT_LIB_NAME}
       ${CUDA_cusparse_LIBRARY}
@@ -33,7 +33,7 @@ else()
   file(GLOB SRC_KERNEL kernel/*.cpp)
   list(APPEND SRC ${SRC_KERNEL})
   add_library(${PROJECT_LIB_NAME} ${SRC})
-  if(OpenMP_FOUND)
+  if(OpenMP_FOUND AND USE_OMP)
     target_link_libraries(${PROJECT_LIB_NAME} OpenMP::OpenMP_CXX)
   endif()
   add_executable(${PROJECT_NAME}-train thundersvm-train.cpp ${COMMON_INCLUDES})
