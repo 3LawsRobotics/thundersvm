@@ -152,7 +152,7 @@ int *train_R(char **dataset, int *kernel, int *svm_type, int *degree,
 
   if (n_cores[0] > 0) {
 #ifdef _OPENMP
-    omp_set_num_threads(n_cores);
+    omp_set_num_threads(*n_cores);
 #endif
   } else if (n_cores[0] != -1) {
     LOG(ERROR) << "n_cores must be positive or -1";
