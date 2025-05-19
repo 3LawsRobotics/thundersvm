@@ -38,7 +38,11 @@ void DataSet::load_from_file(string file_name) {
 
   int buffer_size = 16 << 20; // 16MB
   char *buffer = (char *)malloc(buffer_size);
+#ifdef _OPENMP
   const int nthread = omp_get_max_threads();
+#else
+  const int nthread = 1;
+#endif
   while (ifs) {
     char *head = buffer;
     ifs.read(buffer, buffer_size);
@@ -50,7 +54,11 @@ void DataSet::load_from_file(string file_name) {
 #pragma omp parallel num_threads(nthread)
     {
       // get working area of this thread
+#ifdef _OPENMP
       int tid = omp_get_thread_num();
+#else
+      int tid = 0;
+#endif
       size_t nstep = (size + nthread - 1) / nthread;
       size_t sbegin = min(tid * nstep, size - 1);
       size_t send = min((tid + 1) * nstep, size - 1);
