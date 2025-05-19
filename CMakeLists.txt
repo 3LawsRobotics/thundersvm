@@ -30,6 +30,9 @@ endif()
 
 find_package(Threads)
 find_package(OpenMP)
+if(OpenMP_FOUND)
+  add_definitions(-D_OPENMP)
+endif()
 add_definitions("-DELPP_NO_LOG_TO_FILE")
 
 if(USE_CUDA)
