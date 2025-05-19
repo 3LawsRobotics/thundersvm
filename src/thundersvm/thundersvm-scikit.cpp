@@ -62,7 +62,9 @@ void sparse_model_scikit(int row_size, float *val, int *row_ptr, int *col_ptr,
     el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Enabled, "false");
 
   if (n_cores > 0) {
+#ifdef _OPENMP
     omp_set_num_threads(n_cores);
+#endif
   } else if (n_cores != -1) {
     LOG(ERROR) << "n_jobs must be positive or -1";
   }
@@ -170,7 +172,9 @@ void dense_model_scikit(int row_size, int features, float *data, float *label,
     el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Enabled, "false");
 
   if (n_cores > 0) {
+#ifdef _OPENMP
     omp_set_num_threads(n_cores);
+#endif
   } else if (n_cores != -1) {
     LOG(ERROR) << "n_jobs must be positive or -1";
   }

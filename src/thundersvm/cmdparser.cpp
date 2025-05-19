@@ -173,7 +173,9 @@ void CMDParser::parse_command_line(int argc, char **argv) {
       }
     }
     if (n_cores > 0) {
+#ifdef _OPENMP
       omp_set_num_threads(n_cores);
+#endif
     } else if (n_cores != -1) {
       LOG(ERROR) << "the number of cpu cores must be positive or -1";
     }
@@ -222,7 +224,9 @@ void CMDParser::parse_command_line(int argc, char **argv) {
       }
     }
     if (n_cores > 0) {
+#ifdef _OPENMP
       omp_set_num_threads(n_cores);
+#endif
     } else if (n_cores != -1) {
       LOG(ERROR) << "the number of cpu cores must be positive or -1";
     }
@@ -321,7 +325,9 @@ void CMDParser::parse_python(int argc, char **argv) {
     }
   }
   if (n_cores > 0) {
+#ifdef _OPENMP
     omp_set_num_threads(n_cores);
+#endif
   } else if (n_cores != -1) {
     LOG(ERROR) << "the number of cpu cores must be positive or -1";
   }

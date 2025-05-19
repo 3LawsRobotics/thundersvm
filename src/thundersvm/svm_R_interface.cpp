@@ -151,7 +151,9 @@ int *train_R(char **dataset, int *kernel, int *svm_type, int *degree,
     el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Enabled, "true");
 
   if (n_cores[0] > 0) {
-    omp_set_num_threads(n_cores[0]);
+#ifdef _OPENMP
+    omp_set_num_threads(n_cores);
+#endif
   } else if (n_cores[0] != -1) {
     LOG(ERROR) << "n_cores must be positive or -1";
   }
